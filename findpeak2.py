@@ -340,13 +340,13 @@ def findpeakl(data, zp, noise, bottom, top, r):
 
 #%%Get data
 filename=filedialog.askopenfilename()
-data=loadData(filename,11)#spectrum of pump: 5, spectrum of second harmonic: ?
-data=np.array(data)[1249:6250]#在这里更改取点范围:1250-6250
+data=loadData(filename,5)#spectrum of pump: 5, spectrum of second harmonic: ?
+data=np.array(data)[1399:6400]#在这里更改取点范围:1250-6250
 length=len(data)
 x=[]
 for i in range(length):
     ### 在这里更改横轴换算比率
-    x.append(3.6*4*i/length)
+    x.append(18.4*2*i/length)
 top=max(x)
 bottom=min(x)
 widthx=(top-bottom)/(length-1)
@@ -403,14 +403,20 @@ for i in range(n):
     #print('position:'+str(pos[i]))
     #print('amp:'+str(amp[i]))
     print('t:'+str(t))
-    print('FWHM:'+str(sig[i])+'GHz')
+    print('FWHM:'+str(2*sig[i])+'GHz')
 for i in range(n):
     a2=peak2[i][2]
     miu2=peak2[i][1]
     gama2=peak2[i][0]
     p3(-a2,miu2,gama2,zeroline,bottom,top,len(data),i+1)
 plt.plot(x,data_sm,label='smoothed data')
+plt.tick_params(labelsize=14)
 plt.legend()
+plt.xlabel('Detuning (GHz)',fontsize=14)
+plt.ylabel('Intensity (a.u.)',fontsize=14)
+tmpfn=filename.split('.')
+tmpfn[-1]='.png'
+plt.savefig(''.join(tmpfn))
 plt.show()
 
 
